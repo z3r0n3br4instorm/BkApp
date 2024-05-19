@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>511</width>
+    <height>256</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+font: 25 8pt &quot;Space Grotesk Medium&quot;;
+
+</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>231</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::RichText</enum>
+   </property>
+   <property name="pixmap">
+    <pixmap>../resources/Images/clothing.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>10</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/* QLabel Style */
+QLabel {
+    color: #000; /* Black */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+</string>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Select Login Environment :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>60</y>
+     <width>251</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Space Grotesk Medium</family>
+     <pointsize>-1</pointsize>
+     <weight>3</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <underline>false</underline>
+     <strikeout>false</strikeout>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/* QPushButton Style */
+QPushButton {
+    background-color: #000; /* Black */
+    border: none;
+    color: #FFF; /* White */
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+QPushButton:hover {
+    background-color: #333; /* Darker Gray */
+}
+
+QPushButton:pressed {
+    background-color: #666; /* Even Darker Gray */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Doctor ⚕</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>120</y>
+     <width>251</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/* QPushButton Style */
+QPushButton {
+    background-color: #000; /* Black */
+    border: none;
+    color: #FFF; /* White */
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+QPushButton:hover {
+    background-color: #333; /* Darker Gray */
+}
+
+QPushButton:pressed {
+    background-color: #666; /* Even Darker Gray */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Patient 🏥</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>180</y>
+     <width>251</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/* QPushButton Style */
+QPushButton {
+    background-color: #000; /* Black */
+    border: none;
+    color: #FFF; /* White */
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+QPushButton:hover {
+    background-color: #333; /* Darker Gray */
+}
+
+QPushButton:pressed {
+    background-color: #666; /* Even Darker Gray */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Pharmacy 💊</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>491</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Hospital Management System | v 0.0.1 Dev&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
