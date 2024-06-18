@@ -145,6 +145,7 @@ class Ui_Dialog(object):
         # IN AN UPDATE, COPY CODE FROM HERE
 
         self.pushButton_3.clicked.connect(self.openUser)
+        self.pushButton_2.clicked.connect(self.openDoctor)
 
 
 
@@ -160,11 +161,16 @@ class Ui_Dialog(object):
         except Exception as e:
                 error(str(e))
 
+    def openDoctor(self):
+        try:
+                subprocess.Popen(["python", "login-doctor.py"])
+        except Exception as e:
+                error(str(e))
 
         ###################################
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Hospital Management System"))
+        Dialog.setWindowTitle(_translate("Dialog", "Princeton Plainsboro  Software Department - OPD Management System"))
         self.label_2.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Select Login Environment :</span></p></body></html>"))
         self.pushButton_2.setText(_translate("Dialog", "Doctor ⚕"))
         self.pushButton_3.setText(_translate("Dialog", "Patient 🏥"))

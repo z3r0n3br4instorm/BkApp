@@ -9,10 +9,10 @@ collection = db["doctors"]
 
 # Define the data to insert
 data = [
-    {"name": "A. Harischandra", "occupation": "FD"},
-    {"name": "R. Bandaranayake", "occupation": "EET"},
-    {"name": "N. K. Jayathilake", "occupation": "OS"},
-    {"name": "H. Wells", "occupation": "G"}
+    {"name": "A. Harischandra", "email":"harischandra@gmail.com" , "occupation": "FD", "password":"harischandra123"},
+    {"name": "R. Bandaranayake", "email":"bandaranayake@gmail.com" , "occupation": "EET", "password":"bandaranayake123"},
+    {"name": "N. K. Jayathilake", "email":"jayathilaka@gmail.com" ,"occupation": "OS", "password":"jayathilake123"},
+    {"name": "H. Wells","email":"wells@gmail.com" , "occupation": "G", "password":"wells123"}
 ]
 
 # Insert the data into the collection

@@ -456,7 +456,8 @@ class Ui_MainWindow(object):
                 db = client["Hospital"]
                 collection = db["Patients"]
                 if collection.find_one({"Email": UserName, "Password": Password}):
-                        notif("Login Successful")
+                        results = collection.find_one({"Email": UserName})
+                        notif("Login Successful, Welcome back "+results["UserName"]+"!")
                         # Get the _id from the database
                         userID = collection.find_one({"Email": UserName, "Password": Password})["_id"]
                         subprocess.Popen(["python", "patient.py", str(userID)])
@@ -506,7 +507,7 @@ class Ui_MainWindow(object):
                 collection = db["Patients"]
                 print(marryStat)
                 collection.insert_one({"UserName": UserName, "Password": Password, "Age": Age, "BloodGroup": BloodGroup ,"Email": Email ,"Disorders": Disorders, "Address": Address, "Gender": gender, "MaritalStatus": marryStat})
-                notif("Sign Up Successful")
+                notif("Sign Up Successful, Welcome "+UserName+" !")
         except Exception as e:
                 error(str(e))
     def checkDatabase(self):
@@ -528,7 +529,7 @@ class Ui_MainWindow(object):
                 self.pushButton_2.hide()
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Hospital Management System - Login / Sign Up [Patient]"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Princeton Plainsboro  Software Department - OPD Login / Sign Up [Patient]"))
         # self.pushButton_2.setText(_translate("MainWindow", "<DYNAMIC>"))
         self.label_3.setText(_translate("MainWindow", "Full Name :"))
         self.label_4.setText(_translate("MainWindow", "Gender      :"))

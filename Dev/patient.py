@@ -6,11 +6,13 @@ import threading
 from bson.objectid import ObjectId
 import pymongo
 import re
+import time
 
-global username, doctor, userCode, symptoms
+global username, doctor, userCode, symptoms, haltcode
 symptoms = []
 doctor = "NULL"
 username = "Loading..."
+haltcode = 0
 userCode = sys.argv[1]
 
 
@@ -55,7 +57,7 @@ def classify_symptoms():
         
 
 def fetchDataFromDatabase():
-        global username, userCode
+        global username, userCode, haltcode
         try:
                 #notif("UserID "+userCode+" is being processed...")
                 client = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -67,9 +69,11 @@ def fetchDataFromDatabase():
                         username = result['UserName']
                 else:
                         error("User not found in the database!")
+                        haltcode = 1
                         sys.exit(1)
         except Exception as e:
-                error("Database Communication Error occurred!<br>Please Contact System Administrator...<br>More Info:"+str(e))
+                error("Database Communication Error occurred!<br>More Info:"+str(e))
+                haltcode = 1
                 sys.exit(1)
 
 dataFetchThread = threading.Thread(target=fetchDataFromDatabase)
@@ -348,40 +352,68 @@ class Ui_MainWindow(object):
         self._update_timer = QtCore.QTimer()
         self._update_timer.start(500)
         self._update_timer.timeout.connect(self.onloadUpdateComponents)
+        self.pushButton_5.clicked.connect(self.openPreviousSubmissions)
         self.pushButton_2.clicked.connect(self.submitData)
+        self.pushButton_3.clicked.connect(self.logout)
+        self.pushButton_4.clicked.connect(self.clearSelections)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def submitData(self):
-        global userCode, symptoms, doctor
+        global userCode, symptoms, doctor, haltcode
         symptoms = []
         _translate = QtCore.QCoreApplication.translate
         try:
-                client = pymongo.MongoClient("mongodb://localhost:27017/")
-                db = client["Hospital"]
-                collection = db["Patient_Requests"]
-                for i in self.listWidget.selectedItems():
-                        symptoms.append(i.text())
-                for i in self.listWidget_2.selectedItems():
-                        symptoms.append(i.text())
-                for i in self.listWidget_3.selectedItems():
-                        symptoms.append(i.text())
-                for i in self.listWidget_4.selectedItems():
-                        symptoms.append(i.text())
-                additionalData = self.textEdit.toPlainText()
-                if symptoms == []:
-                        error("Please Select Atleast One Symptom !")
-                        return
-                if additionalData == "":
-                        additionalData = "NULL"
-                collection.insert_one({"UserCode": userCode, "symptoms": symptoms, "additional": additionalData})
-                self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Processing Your Symptoms...</span></p></body></html>"))
-                doctor = classify_symptoms()
-                doctorName = db["doctors"].find_one({"occupation": doctor})["name"]
-                self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">You Should Meet : Dr."+doctorName+"</span></p></body></html>"))
-                notif("Symptoms Submitted Successfully !<br>Thank You For Your Submission !")
+                if haltcode == 0:
+                        client = pymongo.MongoClient("mongodb://localhost:27017/")
+                        db = client["Hospital"]
+                        collection = db["Patient_Requests"]
+                        for i in self.listWidget.selectedItems():
+                                symptoms.append(i.text())
+                        for i in self.listWidget_2.selectedItems():
+                                symptoms.append(i.text())
+                        for i in self.listWidget_3.selectedItems():
+                                symptoms.append(i.text())
+                        for i in self.listWidget_4.selectedItems():
+                                symptoms.append(i.text())
+                        additionalData = self.textEdit.toPlainText()
+                        if symptoms == []:
+                                error("Please Select Atleast One Symptom !")
+                                return
+                        if additionalData == "":
+                                additionalData = "NULL"
+                        collection.insert_one({"UserCode": userCode, "symptoms": symptoms, "additional": additionalData, "status": "pending"})
+                        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Processing Your Symptoms...</span></p></body></html>"))
+                        doctor = classify_symptoms()
+                        doctorName = db["doctors"].find_one({"occupation": doctor})["name"]
+                        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">You Should Meet : Dr."+doctorName+"</span></p></body></html>"))
+                        notif("Symptoms Submitted Successfully !<br>Thank You For Your Submission !")
+                else :
+                       error("Unauthorized Access or Request Detected !<br>Controlled Session Crash Active<br>Program will now halt...")
+                       time.sleep(100000)
         except Exception as e:
                 error("Database Communication Error occured !<br>Please Contact System Administrator...<br>"+str(e))
+
+    
+    def clearSelections(self):
+        self.listWidget.clearSelection()
+        self.listWidget_2.clearSelection()
+        self.listWidget_3.clearSelection()
+        self.listWidget_4.clearSelection()
+        self.textEdit.clear()
+
+    def logout(self):
+        sys.exit(0)
+
+    def openPreviousSubmissions(self):
+        if haltcode == 0:
+                try:
+                        subprocess.Popen(["python", "patient-submissions.py", userCode])
+                except Exception as e:
+                        error(str(e))
+        else :
+                error("Unauthorized Access or Request Detected !<br>Controlled Session Crash Active<br>Program will now halt...")
+                time.sleep(100000)
 
     def onloadUpdateComponents(self):
         global username, doctor
@@ -393,7 +425,7 @@ class Ui_MainWindow(object):
                 self.label_8.setText("")
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Princeton Plainsboro Software Department - OPD Management System |  Patient"))
         self.pushButton_2.setText(_translate("MainWindow", "Submit"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p>Symptom Selection</p></body></html>"))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt;\">Common Symptoms</span></p></body></html>"))

@@ -6,65 +6,80 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>332</width>
-    <height>365</height>
+    <width>525</width>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(83, 0, 2, 255), stop:0.994924 rgba(0, 0, 0, 255));</string>
+   <string notr="true">font: 8pt &quot;Space Grotesk&quot;;</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>331</width>
-     <height>291</height>
+     <x>10</x>
+     <y>10</y>
+     <width>151</width>
+     <height>151</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:100pt; font-weight:600; color:#9f0003;&quot;&gt;/ ! \&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:48pt; font-weight:600; color:#9f0003;&quot;&gt;/ ! \&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>331</width>
-     <height>81</height>
+     <x>170</x>
+     <y>10</y>
+     <width>341</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(54, 0, 0);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt; color:#ff0004;&quot;&gt;&amp;gt;F A T A L - E R R O R&amp;lt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:22pt; color:#bd0003;&quot;&gt;An Exception Occured !&lt;/span&gt;&lt;span style=&quot; font-size:22pt; color:#ff0004;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:12pt; color:#000000;&quot;&gt;Please Contact System Administrator&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QTextBrowser" name="textBrowser">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>290</y>
-     <width>331</width>
+     <x>170</x>
+     <y>90</y>
+     <width>341</width>
      <height>71</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 0, 0);
+font: 8pt &quot;Space Mono&quot;;
 color: rgb(167, 0, 3);</string>
    </property>
    <property name="html">
     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Space Grotesk Light'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Error Details :&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;[ZRNLBS_ERR_HANDLER]:LOADING DATA...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Space Mono'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Error Trace :&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Exception Example&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>16</x>
+     <y>170</y>
+     <width>491</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;For Further Assistance, Contact supportDesk@plainsboro.org&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>
