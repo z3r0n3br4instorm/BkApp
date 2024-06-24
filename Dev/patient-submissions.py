@@ -114,6 +114,11 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         self.pushButton_2.clicked.connect(self.submitRequest)
         MainWindow.setStatusBar(self.statusbar)
+        try:
+                _translate = QtCore.QCoreApplication.translate
+                self.label_7.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:24pt;\">Submission Data</span></p><p><span style=\" font-size:10pt;\">User : "+userCode+"</span></p></body></html>"))
+        except Exception as e:
+               notif.error(e)
         self.displayUserRequests()
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -172,7 +177,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Patient Submissions Management"))
-        self.label_7.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:24pt;\">Submission Data</span></p><p><span style=\" font-size:10pt;\">User : &lt;Dynamic&gt;</span></p></body></html>"))
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
         item = self.tableWidget.item(0, 2)
@@ -181,7 +185,7 @@ class Ui_MainWindow(object):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Status"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Options"))
+        item.setText(_translate("MainWindow", "Delete Request"))
         # item.setText(_translate("MainWindow", "Delete"))
         self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton_2.setText(_translate("MainWindow", "Submit"))

@@ -360,7 +360,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def submitData(self):
-        global userCode, symptoms, doctor, haltcode
+        global userCode, symptoms, doctor, haltcode, username
         symptoms = []
         _translate = QtCore.QCoreApplication.translate
         try:
@@ -382,10 +382,10 @@ class Ui_MainWindow(object):
                                 return
                         if additionalData == "":
                                 additionalData = "NULL"
-                        collection.insert_one({"UserCode": userCode, "symptoms": symptoms, "additional": additionalData, "status": "pending"})
                         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Processing Your Symptoms...</span></p></body></html>"))
                         doctor = classify_symptoms()
                         doctorName = db["doctors"].find_one({"occupation": doctor})["name"]
+                        collection.insert_one({"UserName": username, "symptoms": symptoms, "additional": additionalData, "status": "pending", "doctor": doctor })
                         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">You Should Meet : Dr."+doctorName+"</span></p></body></html>"))
                         notif("Symptoms Submitted Successfully !<br>Thank You For Your Submission !")
                 else :
