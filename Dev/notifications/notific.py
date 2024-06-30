@@ -23,15 +23,15 @@ class Ui_Dialog(object):
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 10, 151, 151))
         self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(170, 10, 341, 61))
-        self.label_2.setStyleSheet("")
-        self.label_2.setObjectName("label_2")
+        # self.label_2 = QtWidgets.QLabel(Dialog)
+        # self.label_2.setGeometry(QtCore.QRect(170, 10, 341, 61))
+        # self.label_2.setStyleSheet("")
+        # self.label_2.setObjectName("label_2")
         self.textBrowser = QtWidgets.QTextBrowser(Dialog)
-        self.textBrowser.setGeometry(QtCore.QRect(170, 90, 341, 71))
+        self.textBrowser.setGeometry(QtCore.QRect(170, 10, 341, 151))
         self.textBrowser.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"font: 8pt \"Space Mono\";\n"
-"color: rgb(167, 0, 3);")
+        "font: 14pt \"Space Mono\";\n"
+        "background-color: rgb(255, 255, 255);")
         self.textBrowser.setObjectName("textBrowser")
         self.label_3 = QtWidgets.QLabel(Dialog)
         self.label_3.setGeometry(QtCore.QRect(16, 170, 491, 20))
@@ -48,12 +48,8 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
     def update_error(self,data):
-        _translate = QtCore.QCoreApplication.translate
-        self.textBrowser.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-    "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-    "p, li { white-space: pre-wrap; }\n"
-    "</style></head><body style=\" font-family:\'Space Mono\'; font-size:8pt; font-weight:200; font-style:normal;\">\n"
-    "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\">"+"Details :<br>"+data+"</p></body></html>"))
+        # _translate = QtCore.QCoreApplication.translate
+        self.textBrowser.setText(str(data))
     
     def restartAnimation(self):
         global x,y, autoClose
@@ -73,15 +69,14 @@ class Ui_Dialog(object):
         autoClose +=1 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Princeton Plainsboro Software Department - OPD System Notification Handler"))
+        Dialog.setWindowTitle(_translate("Dialog", "OPD System Notification Handler"))
         self.label.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:48pt; font-weight:600; color:#09b304;\">/ ! \\</span></p></body></html>"))
-        self.label_2.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:22pt; color:#058a00;\">Notification !</span><span style=\" font-size:22pt; color:#ff0004;\"><br/></span><span style=\" font-size:10pt; color:#000000;\">Plainsboro SD - Notification Handler</span></p></body></html>"))
+        # self.label_2.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:22pt; color:#058a00;\">Notification !</span><span style=\" font-size:22pt; color:#ff0004;\"><br/></span><span style=\" font-size:10pt; color:#000000;\">Plainsboro SD - Notification Handler</span></p></body></html>"))
         self.textBrowser.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Space Mono\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'Space Mono\'; background-color:white;  font-size:14pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Error Trace :</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Exception Example</p></body></html>"))
         if "not a valid" in sys.argv[1]:
             self.update_error("User not found in the database.")

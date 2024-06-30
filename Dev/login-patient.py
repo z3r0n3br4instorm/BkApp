@@ -22,9 +22,9 @@ connStat = 2
 def error(error):
         subprocess.Popen(["python", "notifications/error.py", error])
 
+
 def notif(data):
         subprocess.Popen(["python", "notifications/notific.py", data])
-
 
 def database_connection_successful():
         global connStat
@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         self.pushButton_2.setObjectName("pushButton_2")
-        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit.setGeometry(QtCore.QRect(440, 40, 311, 41))
         self.textEdit.setStyleSheet("QTextEdit {\n"
 "    background-color: #ffffff; /* White background */\n"
@@ -135,25 +135,25 @@ class Ui_MainWindow(object):
         self.checkBox_2 = QtWidgets.QCheckBox(self.centralwidget)
         self.checkBox_2.setGeometry(QtCore.QRect(510, 100, 91, 41))
         self.checkBox_2.setObjectName("checkBox_2")
-        self.textEdit_2 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_2.setGeometry(QtCore.QRect(440, 160, 311, 41))
         self.textEdit_2.setStyleSheet("QTextEdit {\n"
-"    background-color: #ffffff; /* White background */\n"
-"    border: 2px solid #000000; /* Black border */\n"
-"    color: #000000; /* Black text color */\n"
-"    padding: 5px; /* Padding */\n"
-"    font-size: 14px; /* Text font size */\n"
-"}\n"
-"\n"
-"QTextEdit:focus {\n"
-"    border-color: #000000; /* Border color on focus (black) */\n"
-"}\n"
-"")
+        "    background-color: #ffffff; /* White background */\n"
+        "    border: 2px solid #000000; /* Black border */\n"
+        "    color: #000000; /* Black text color */\n"
+        "    padding: 5px; /* Padding */\n"
+        "    font-size: 14px; /* Text font size */\n"
+        "}\n"
+        "\n"
+        "QTextEdit:focus {\n"
+        "    border-color: #000000; /* Border color on focus (black) */\n"
+        "}\n"
+        "")
         self.textEdit_2.setObjectName("textEdit_2")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(330, 160, 91, 41))
         self.label_5.setObjectName("label_5")
-        self.textEdit_3 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_3 = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_3.setGeometry(QtCore.QRect(440, 220, 311, 41))
         self.textEdit_3.setStyleSheet("QTextEdit {\n"
 "    background-color: #ffffff; /* White background */\n"
@@ -171,7 +171,7 @@ class Ui_MainWindow(object):
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(260, 220, 161, 41))
         self.label_6.setObjectName("label_6")
-        self.textEdit_4 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_4 = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_4.setGeometry(QtCore.QRect(670, 98, 81, 41))
         self.textEdit_4.setStyleSheet("QTextEdit {\n"
 "    background-color: #ffffff; /* White background */\n"
@@ -229,7 +229,7 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         self.pushButton_3.setObjectName("pushButton_3")
-        self.textEdit_5 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_5 = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_5.setGeometry(QtCore.QRect(440, 278, 61, 41))
         self.textEdit_5.setStyleSheet("QTextEdit {\n"
 "    background-color: #ffffff; /* White background */\n"
@@ -274,7 +274,7 @@ class Ui_MainWindow(object):
         self.label_11 = QtWidgets.QLabel(self.centralwidget)
         self.label_11.setGeometry(QtCore.QRect(770, 40, 351, 61))
         self.label_11.setObjectName("label_11")
-        self.textEdit_7 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_7 = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_7.setGeometry(QtCore.QRect(770, 240, 381, 41))
         self.textEdit_7.setStyleSheet("QTextEdit {\n"
 "    background-color: #ffffff; /* White background */\n"
@@ -295,7 +295,7 @@ class Ui_MainWindow(object):
         self.label_13.setGeometry(QtCore.QRect(20, 10, 1171, 351))
         self.label_13.setStyleSheet("background-color: rgb(226, 226, 226);")
         self.label_13.setObjectName("label_13")
-        self.textEdit_8 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_8 = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_8.setGeometry(QtCore.QRect(770, 320, 381, 41))
         self.textEdit_8.setStyleSheet("QTextEdit {\n"
 "    background-color: #ffffff; /* White background */\n"
@@ -355,6 +355,8 @@ class Ui_MainWindow(object):
         self.pushButton_3.setText("Switch to Log in")
         self.label_8.setText("Interface Status : Sign Up")
         self.pushButton_2.setText("Sign Up")
+        self.textEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.textEdit_3.setEchoMode(QtWidgets.QLineEdit.Password)
         ## System Starts in SignUP Interface
         if envStat == "signup":
               self.pushButton_2.clicked.connect(self.signUp)
@@ -444,8 +446,8 @@ class Ui_MainWindow(object):
         else:
               error("Environment Error")
               return
-        UserName = self.textEdit.toPlainText()
-        Password = self.textEdit_2.toPlainText()
+        UserName = self.textEdit.text()
+        Password = self.textEdit_2.text()
         # Validation
         if UserName == "" or Password == "":
                 error("Please fill all fields")
@@ -477,14 +479,14 @@ class Ui_MainWindow(object):
               self.login()
               return
         print(self.checkBox_3.isChecked())
-        UserName = self.textEdit.toPlainText()
-        Password = self.textEdit_2.toPlainText()
-        RePassword = self.textEdit_3.toPlainText()
-        Age = self.textEdit_4.toPlainText()
-        BloodGroup = self.textEdit_5.toPlainText()
+        UserName = self.textEdit.text()
+        Password = self.textEdit_2.text()
+        RePassword = self.textEdit_3.text()
+        Age = self.textEdit_4.text()
+        BloodGroup = self.textEdit_5.text()
         Disorders = self.textEdit_6.toPlainText()
-        Address = self.textEdit_7.toPlainText()
-        Email  = self.textEdit_8.toPlainText()
+        Address = self.textEdit_7.text()
+        Email  = self.textEdit_8.text()
         # Validation
         if UserName == "" or Password == "" or RePassword == "" or Age == "" or BloodGroup == "" or Disorders == "" or Email == "" or Address == "" or (not(self.checkBox.isChecked()) and not(self.checkBox_2.isChecked())) or (not(self.checkBox_3.isChecked()) and not(self.checkBox_4.isChecked())):
                 error("Please fill all fields")

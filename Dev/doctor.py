@@ -184,21 +184,26 @@ class PatientRequestsDialog(QtWidgets.QDialog):
             patientName = self.tableWidget.item(row.row(), 1).text()
             patient = collection.find_one({"UserName": patientName})
 
+
             if patient:
-                details = f"""
-                Patient ID: {patient['_id']}
-                Name: {patient['UserName']}
-                Age: {patient['Age']}
-                Blood Group: {patient['BloodGroup']}
-                Email: {patient['Email']}
-                Disorders: {patient['Disorders']}
-                Address: {patient['Address']}
-                Gender: {patient['Gender']}
-                Marital Status: {patient['MaritalStatus']}
-                """
-                QtWidgets.QMessageBox.information(self, "Full Patient Details", details)
-            else:
-                error("Patient details not found")
+                getPatinetID = patient['_id']
+                # Pass the ID to ListAllDetails.py
+                subprocess.Popen(["python", "ListAllDetails.py", str(getPatinetID)])
+            # if patient:
+            #     details = f"""
+            #     Patient ID: {patient['_id']}
+            #     Name: {patient['UserName']}
+            #     Age: {patient['Age']}
+            #     Blood Group: {patient['BloodGroup']}
+            #     Email: {patient['Email']}
+            #     Disorders: {patient['Disorders']}
+            #     Address: {patient['Address']}
+            #     Gender: {patient['Gender']}
+            #     Marital Status: {patient['MaritalStatus']}
+            #     """
+            #     QtWidgets.QMessageBox.information(self, "Full Patient Details", details)
+            # else:
+            #     error("Patient details not found")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
