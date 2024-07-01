@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 import sys
 import subprocess
 import time
-global haltcode, username, userCode, userID, doctorOccupation
+global haltcode, username, userCode, userID, doctorOccupation, requestId
 
 doctorOccupation = "Doctor"
 
@@ -51,7 +51,7 @@ class PatientRequestsDialog(QtWidgets.QDialog):
         self.deleteButton.clicked.connect(self.deleteRequest)
         self.layout.addWidget(self.deleteButton)
 
-        self.fullDetailsButton = QtWidgets.QPushButton("Full Patient Details")
+        self.fullDetailsButton = QtWidgets.QPushButton("More Options")
         self.fullDetailsButton.clicked.connect(self.showFullPatientDetails)
         self.layout.addWidget(self.fullDetailsButton)
 
@@ -87,7 +87,7 @@ class PatientRequestsDialog(QtWidgets.QDialog):
         self.loadRequests()
 
     def fetchDataFromDatabase():
-        global username, userCode, haltcode, userID, doctorOccupation
+        global username, userCode, haltcode, userID, doctorOccupation, requestId
         try:
             client = pymongo.MongoClient("mongodb://localhost:27017/")
             db = client["Hospital"]
@@ -108,7 +108,7 @@ class PatientRequestsDialog(QtWidgets.QDialog):
     fetchDataFromDatabase()
 
     def loadRequests(self):
-        global doctorOccupation
+        global doctorOccupation, requestId
         client = MongoClient('mongodb://localhost:27017/')
         db = client.Hospital
         collection = db.Patient_Requests
@@ -139,6 +139,7 @@ class PatientRequestsDialog(QtWidgets.QDialog):
         self.updateRequestStatus("declined")
 
     def deleteRequest(self):
+        global requestId
         selectedRows = self.tableWidget.selectionModel().selectedRows()
         if not selectedRows:
             error("No row selected")
@@ -155,6 +156,7 @@ class PatientRequestsDialog(QtWidgets.QDialog):
         self.loadRequests()
 
     def updateRequestStatus(self, status):
+        global requestId
         selectedRows = self.tableWidget.selectionModel().selectedRows()
         if not selectedRows:
             error("No row selected")
@@ -171,6 +173,7 @@ class PatientRequestsDialog(QtWidgets.QDialog):
         self.loadRequests()
 
     def showFullPatientDetails(self):
+        global requestId
         selectedRows = self.tableWidget.selectionModel().selectedRows()
         if not selectedRows:
             error("No row selected")
@@ -179,16 +182,18 @@ class PatientRequestsDialog(QtWidgets.QDialog):
         client = MongoClient('mongodb://localhost:27017/')
         db = client.Hospital
         collection = db.Patients
+        requestsCollection = db.Patient_Requests
 
         for row in selectedRows:
+            requestId = self.tableWidget.item(row.row(), 0).text()
             patientName = self.tableWidget.item(row.row(), 1).text()
             patient = collection.find_one({"UserName": patientName})
-
+            # requestID = requestsCollection.find_one({"_id": ObjectId(patient['_id'])})
 
             if patient:
                 getPatinetID = patient['_id']
-                # Pass the ID to ListAllDetails.py
-                subprocess.Popen(["python", "ListAllDetails.py", str(getPatinetID)])
+                # Pass the ID to ListAllDetails.py and the _id of request
+                subprocess.Popen(["python", "ListAllDetails.py", str(getPatinetID), str(doctorOccupation), str(requestId)])
             # if patient:
             #     details = f"""
             #     Patient ID: {patient['_id']}

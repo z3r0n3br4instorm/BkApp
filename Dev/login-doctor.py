@@ -135,7 +135,7 @@ class Ui_MainWindow(object):
         self.checkBox_2 = QtWidgets.QCheckBox(self.centralwidget)
         self.checkBox_2.setGeometry(QtCore.QRect(510, 100, 91, 41))
         self.checkBox_2.setObjectName("checkBox_2")
-        self.textEdit_2 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_2.setGeometry(QtCore.QRect(440, 160, 311, 41))
         self.textEdit_2.setStyleSheet("QTextEdit {\n"
 "    background-color: #ffffff; /* White background */\n"
@@ -153,7 +153,7 @@ class Ui_MainWindow(object):
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(330, 160, 91, 41))
         self.label_5.setObjectName("label_5")
-        self.textEdit_3 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_3 = QtWidgets.QLineEdit(self.centralwidget)
         self.textEdit_3.setGeometry(QtCore.QRect(440, 220, 311, 41))
         self.textEdit_3.setStyleSheet("QTextEdit {\n"
 "    background-color: #ffffff; /* White background */\n"
@@ -347,6 +347,7 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.textEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
         self._update_timer = QtCore.QTimer()
         self._update_timer.start(500)
         self._update_timer.timeout.connect(self.checkDatabase)
@@ -376,7 +377,7 @@ class Ui_MainWindow(object):
                         error("Environment Error")
                         return
                 UserName = self.textEdit.toPlainText()
-                Password = self.textEdit_2.toPlainText()
+                Password = self.textEdit_2.text()
                 # Validation
                 if UserName == "" or Password == "":
                         error("Please fill all fields")

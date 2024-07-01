@@ -84,30 +84,30 @@ class Ui_MainWindow(object):
         font.setStrikeOut(False)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setStyleSheet("/* QPushButton Style */\n"
-"QPushButton {\n"
-"    background-color: #000; /* Black */\n"
-"    border: none;\n"
-"    color: #FFF; /* White */\n"
-"    padding: 12px 24px;\n"
-"    text-align: center;\n"
-"    text-decoration: none;\n"
-"    display: inline-block;\n"
-"    font-size: 16px;\n"
-"    margin: 4px 2px;\n"
-"    transition-duration: 0.4s;\n"
-"    cursor: pointer;\n"
-"    border-radius: 8px;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: #333; /* Darker Gray */\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: #666; /* Even Darker Gray */\n"
-"    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n"
-"}\n"
-"")
+                "QPushButton {\n"
+                "    background-color: #000; /* Black */\n"
+                "    border: none;\n"
+                "    color: #FFF; /* White */\n"
+                "    padding: 12px 24px;\n"
+                "    text-align: center;\n"
+                "    text-decoration: none;\n"
+                "    display: inline-block;\n"
+                "    font-size: 16px;\n"
+                "    margin: 4px 2px;\n"
+                "    transition-duration: 0.4s;\n"
+                "    cursor: pointer;\n"
+                "    border-radius: 8px;\n"
+                "}\n"
+                "\n"
+                "QPushButton:hover {\n"
+                "    background-color: #333; /* Darker Gray */\n"
+                "}\n"
+                "\n"
+                "QPushButton:pressed {\n"
+                "    background-color: #666; /* Even Darker Gray */\n"
+                "    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n"
+                "}\n"
+        "")
         self.pushButton_2.setObjectName("pushButton_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -131,7 +131,7 @@ class Ui_MainWindow(object):
                         db = client["Hospital"]
                         collection = db["Patient_Requests"]
                         print(userCode)
-                        results = collection.find({"UserCode": userCode})
+                        results = collection.find({"patientOriginalID": userCode})
                         results = list(results)  # convert the cursor to a list
                         req = len(results)
                         print(int(req))
@@ -168,7 +168,7 @@ class Ui_MainWindow(object):
                                 collection.delete_one(results)
                                 # refresh the table
                                 self.displayUserRequests()
-                notif.success("Requests submitted successfully!"        )
+                notif.success("Requests submitted successfully!")
         except Exception as e:
                 notif.error("Database Communication Error occurred!<br>More Info:" + str(e))
                 sys.exit(1)
@@ -186,7 +186,6 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Status"))
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Delete Request"))
-        # item.setText(_translate("MainWindow", "Delete"))
         self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton_2.setText(_translate("MainWindow", "Submit"))
 

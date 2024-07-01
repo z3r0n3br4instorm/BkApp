@@ -146,6 +146,7 @@ class Ui_Dialog(object):
 
         self.pushButton_3.clicked.connect(self.openUser)
         self.pushButton_2.clicked.connect(self.openDoctor)
+        self.pushButton_4.clicked.connect(self.openPharmacy)
 
 
 
@@ -167,6 +168,11 @@ class Ui_Dialog(object):
         except Exception as e:
                 error(str(e))
 
+    def openPharmacy(self):
+        try:
+                subprocess.Popen(["python", "pharmacy.py"])
+        except Exception as e:
+                error(str(e))
         ###################################
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
