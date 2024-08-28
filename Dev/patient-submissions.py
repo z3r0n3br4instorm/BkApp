@@ -49,7 +49,7 @@ dataFetchThread.start()
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(421, 640)
+        MainWindow.resize(800, 640)
         MainWindow.setStyleSheet("font: 8pt \"Space Grotesk\";")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -57,9 +57,9 @@ class Ui_MainWindow(object):
         self.label_7.setGeometry(QtCore.QRect(30, 10, 361, 81))
         self.label_7.setObjectName("label_7")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(30, 110, 361, 411))
+        self.tableWidget.setGeometry(QtCore.QRect(30, 110, 740, 411))
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setColumnCount(4)
         self.tableWidget.setRowCount(1)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(0, item)
@@ -70,8 +70,45 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
         item.setCheckState(QtCore.Qt.Checked)
         self.tableWidget.setItem(0, 2, item)
+        self.tableWidget.setStyleSheet("""
+            QTableWidget {
+                background-color: #f0f0f0;
+                alternate-background-color: #e6f7ff;
+                gridline-color: #cccccc;
+                border: 2px solid #8f8f91;
+                border-radius: 5px;
+                font-family: 'Arial';
+                font-size: 14px;
+            }
+
+            QTableWidget::item {
+                border: 1px solid #dcdcdc;
+                padding: 10px;  /* Increased padding for more space inside cells */
+                margin: 5px;    /* Added margin for more spacing between cells */
+            }
+
+            QTableWidget::item:selected {
+                background-color: #3399ff;
+                color: white;
+            }
+
+            QHeaderView::section {
+                background-color: #4CAF50;
+                color: white;
+                padding: 8px;  /* Increased padding for header cells */
+                border: 1px solid #8f8f91;
+                font-weight: bold;
+            }
+
+            QTableCornerButton::section {
+                background-color: #4CAF50;
+                border: 1px solid #8f8f91;
+            }
+        """)
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(30, 530, 361, 61))
         font = QtGui.QFont()
@@ -141,6 +178,7 @@ class Ui_MainWindow(object):
                                 self.tableWidget.setVerticalHeaderItem(i, item)
                                 symptoms = results[i]['symptoms']
                                 status = results[i]['status']
+                                appointmentTime = results[i]['appointmentTime']
                                 if isinstance(symptoms, list):
                                         symptoms = ', '.join(symptoms)  # Convert list to a comma-separated string
                                 item = QtWidgets.QTableWidgetItem(symptoms)  # Create QTableWidgetItem with the string
@@ -150,6 +188,10 @@ class Ui_MainWindow(object):
                                 item = QtWidgets.QTableWidgetItem()
                                 item.setCheckState(QtCore.Qt.Unchecked)
                                 self.tableWidget.setItem(i, 2, item)
+                                item = QtWidgets.QTableWidgetItem(appointmentTime)
+                                self.tableWidget.setItem(i, 3, item)
+                        self.tableWidget.resizeColumnsToContents()
+                        self.tableWidget.resizeRowsToContents()
                 except Exception as e:
                         notif.error("Database Communication Error occurred!<br>More Info:" + str(e))
                         sys.exit(1)
@@ -179,13 +221,15 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Patient Submissions Management"))
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
-        item = self.tableWidget.item(0, 2)
+        item = self.tableWidget.item(0, 3)
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Request"))
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Status"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Delete Request"))
+        item.setText(_translate("MainWindow", "Delete"))
+        item = self.tableWidget.horizontalHeaderItem(3)
+        item.setText(_translate("MainWindow", "Appointment Time"))
         self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton_2.setText(_translate("MainWindow", "Submit"))
 

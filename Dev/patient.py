@@ -387,7 +387,9 @@ class Ui_MainWindow(object):
                         doctorName = db["doctors"].find_one({"occupation": doctor})["name"]
                         # Get Current Time
                         current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                        collection.insert_one({"UserName": username, "symptoms": symptoms, "additional": additionalData, "status": "pending", "doctor": doctor, "patientOriginalID": userCode, "time": current_time})
+                        # add 24 hours to current time to get the appoinment time
+                        appointmentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time() + 86400))
+                        collection.insert_one({"UserName": username, "symptoms": symptoms, "additional": additionalData, "status": "pending", "doctor": doctor, "patientOriginalID": userCode, "time": current_time, "appointmentTime": appointmentTime})
                         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">You Should Meet : Dr."+doctorName+"</span></p></body></html>"))
                         notif("Symptoms Submitted Successfully !<br>Thank You For Your Submission !")
                 else :

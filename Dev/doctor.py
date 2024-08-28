@@ -31,7 +31,7 @@ class PatientRequestsDialog(QtWidgets.QDialog):
 
         self.tableWidget = QtWidgets.QTableWidget(self)
         self.tableWidget.setColumnCount(5)
-        self.tableWidget.setHorizontalHeaderLabels(["ID", "Patient Name", "Symptoms", "Additional", "Status"])
+        self.tableWidget.setHorizontalHeaderLabels(["ID", "Patient Name", "Symptoms", "Additional", "Appointment Time", "Status"])
 
         self.layout.addWidget(self.tableWidget)
 
@@ -124,7 +124,8 @@ class PatientRequestsDialog(QtWidgets.QDialog):
                     self.tableWidget.setItem(rowPosition, 1, QtWidgets.QTableWidgetItem(request['UserName']))
                     self.tableWidget.setItem(rowPosition, 2, QtWidgets.QTableWidgetItem(', '.join(request['symptoms'])))
                     self.tableWidget.setItem(rowPosition, 3, QtWidgets.QTableWidgetItem(request['additional']))
-                    self.tableWidget.setItem(rowPosition, 4, QtWidgets.QTableWidgetItem(request['status']))
+                    self.tableWidget.setItem(rowPosition, 4, QtWidgets.QTableWidgetItem(request['appointmentTime']))
+                    self.tableWidget.setItem(rowPosition, 5, QtWidgets.QTableWidgetItem(request['status']))
 
             # Resize columns to contents
             self.tableWidget.resizeColumnsToContents()
