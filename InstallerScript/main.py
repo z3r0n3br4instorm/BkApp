@@ -57,7 +57,7 @@ class InstallerUI(QWidget):
         self.install_font_button.clicked.connect(self.install_font)
         layout.addWidget(self.install_font_button)
 
-        self.run_script_button = QPushButton("Run createDoctor.py Script", self)
+        self.run_script_button = QPushButton("Run CreateEssential Scripts", self)
         self.run_script_button.clicked.connect(self.run_script)
         layout.addWidget(self.run_script_button)
 
@@ -112,9 +112,10 @@ class InstallerUI(QWidget):
             log_message(self.log_text_edit, f"[ERROR] Failed to install font: {e}", "red")
 
     def run_script(self):
-        log_message(self.log_text_edit, "[INFO] Running 'createDoctor.py'...", "blue")
+        log_message(self.log_text_edit, "[INFO] Running 'Create Essentials'...", "blue")
         try:
             os.system("python createDoctor.py")
+            os.system("python createAdmin.py")
             log_message(self.log_text_edit, "[SUCCESS] Script Executed Successfully!", "green")
         except Exception as e:
             log_message(self.log_text_edit, f"[ERROR] Failed to run script: {e}", "red")
