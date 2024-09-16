@@ -12,6 +12,7 @@ import sys
 from bson.objectid import ObjectId
 import pymongo
 import time
+import subprocess
 
 global patientID
 global patientName
@@ -21,6 +22,10 @@ patientName = "NULL"
 patientID = sys.argv[1]
 doctorOccupation = sys.argv[2]
 requestID = sys.argv[3]
+
+def error(error):
+        subprocess.Popen(["pythonw", "notifications/error.py", error])
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -195,9 +200,13 @@ class Ui_MainWindow(object):
         # Retrieve all the data
         result = collection.find_one({"_id": patientID})
         db2 = client.Hospital
-        collection2 = db2.Patient_Requests
-        systemAutoSelectDetails = collection2.find_one({"patientOriginalID": textPatientID, "doctor": doctorOccupation, "_id": ObjectId(requestID)})
-
+        try:
+            collection2 = db2.Patient_Requests
+            collection3 = db2.Patient_Prescriptions
+            systemAutoSelectDetails = collection2.find_one({"patientOriginalID": textPatientID, "_id": ObjectId(requestID)})
+            systemAutoSelectPrecriptions = collection3.find_one({"requestID": str(requestID)})
+        except Exception as e:
+            error(e)
         # Create a formatted string for displaying the patient details
         if result:
             formatted_result = (
@@ -231,6 +240,19 @@ class Ui_MainWindow(object):
             formatted_result += "<hr>" + additional_result
         else :
             formatted_result += "<hr><h2>Request Details</h2><br>No Request Found"
+
+        if systemAutoSelectPrecriptions:
+            additional_result = (
+                f"<h2>Prescription Details</h2><br>"
+                f"<b>Prescription :</b> {(systemAutoSelectPrecriptions['prescription'])}<br>"
+                f"<b>Prescription Time :</b> {systemAutoSelectPrecriptions['PrescriptionTime']}<br>"
+                f"<b>Request ID :</b> {systemAutoSelectPrecriptions['requestID']}"
+            )
+            formatted_result += "<hr>" + additional_result
+        else :
+            formatted_result += "<hr><h2>Prescription Details</h2><br>No Prescription Found"
+
+
         self.textBrowser.setHtml(formatted_result)
         print(formatted_result)
 

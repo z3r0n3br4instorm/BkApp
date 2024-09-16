@@ -194,7 +194,7 @@ class PatientRequestsDialog(QtWidgets.QDialog):
             if patient:
                 getPatinetID = patient['_id']
                 # Pass the ID to ListAllDetails.py and the _id of request
-                subprocess.Popen(["python", "ListAllDetails.py", str(getPatinetID), str(doctorOccupation), str(requestId)])
+                subprocess.Popen(["pythonw", "ListAllDetails.py", str(getPatinetID), str(doctorOccupation), str(requestId)])
             # if patient:
             #     details = f"""
             #     Patient ID: {patient['_id']}
