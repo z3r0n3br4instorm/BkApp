@@ -13,7 +13,7 @@ import subprocess
 
 
 def error(error):
-    subprocess.Popen(["python", "notifications/error.py", error])
+    subprocess.Popen(["pythonw", "notifications/error.py", error])
 
 
 class Ui_Dialog(object):
@@ -113,27 +113,30 @@ QPushButton:pressed {
 }
 """
 
+    def error(error):
+        subprocess.Popen(["pythonw", "notifications/error.py", error], creationflags=subprocess.CREATE_NO_WINDOW)
+
     def openUser(self):
         try:
-            subprocess.Popen(["python", "login-patient.py"])
+            subprocess.Popen(["pythonw", "login-patient.py"], creationflags=subprocess.CREATE_NO_WINDOW)
         except Exception as e:
             error(str(e))
 
     def openDoctor(self):
         try:
-            subprocess.Popen(["python", "login-doctor.py"])
+            subprocess.Popen(["pythonw", "login-doctor.py"], creationflags=subprocess.CREATE_NO_WINDOW)
         except Exception as e:
             error(str(e))
 
     def openPharmacy(self):
         try:
-            subprocess.Popen(["python", "pharmacy.py"])
+            subprocess.Popen(["pythonw", "pharmacy.py"], creationflags=subprocess.CREATE_NO_WINDOW)
         except Exception as e:
             error(str(e))
 
     def openAdmin(self):
         try:
-            subprocess.Popen(["python", "login-admin.py"])
+            subprocess.Popen(["pythonw", "login-admin.py"], creationflags=subprocess.CREATE_NO_WINDOW)
         except Exception as e:
             error(str(e))
 
@@ -156,3 +159,4 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
+

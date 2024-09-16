@@ -7,6 +7,7 @@ from bson.objectid import ObjectId
 import pymongo
 import re
 import time
+from datetime import datetime, timedelta
 
 global username, doctor, userCode, symptoms, haltcode
 symptoms = []
@@ -32,10 +33,10 @@ keywords = {
 }
 
 def error(error):
-        subprocess.Popen(["python", "notifications/error.py", error])
+        subprocess.Popen(["pythonw", "notifications/error.py", error])
 
 def notif(data):
-        subprocess.Popen(["python", "notifications/notific.py", data])
+        subprocess.Popen(["pythonw", "notifications/notific.py", data])
 
 
 def classify_symptoms():
@@ -359,6 +360,53 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+
+    def allocate_appointment_time(self):
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client['Hospital']
+        collection = db['Patient_Requests']
+
+        current_time = datetime.now() + timedelta(hours=24)
+        work_start_time = current_time.replace(hour=8, minute=0, second=0, microsecond=0)
+        work_end_time = current_time.replace(hour=17, minute=0, second=0, microsecond=0)
+
+        if current_time < work_start_time:
+                current_time = work_start_time
+        elif current_time > work_end_time:
+                current_time = work_start_time + timedelta(days=1)
+
+        appointments = collection.find({"appointmentTime": {"$gte": current_time}}).sort("appointmentTime", pymongo.ASCENDING)
+
+        last_appointment_time = current_time
+
+        for appointment in appointments:
+                existing_time = datetime.strptime(appointment["appointmentTime"], "%Y-%m-%d %H:%M:%S")
+
+                next_time = last_appointment_time + timedelta(minutes=15)
+
+                if next_time > work_end_time:
+                        next_time = work_start_time + timedelta(days=1)
+
+                if next_time <= existing_time:
+                        break
+                last_appointment_time = existing_time + timedelta(minutes=15)
+
+        while last_appointment_time > work_end_time:
+                last_appointment_time = work_start_time + timedelta(days=1)
+
+        # If the generated time already exists, keep incrementing by 15 minutes until an available slot is found
+        while collection.find_one({"appointmentTime": last_appointment_time.strftime("%Y-%m-%d %H:%M:%S")}):
+                last_appointment_time += timedelta(minutes=15)
+
+                # Ensure the newly adjusted time stays within working hours
+                if last_appointment_time > work_end_time:
+                        last_appointment_time = work_start_time + timedelta(days=1)
+
+        new_appointment_time = last_appointment_time.strftime("%Y-%m-%d %H:%M:%S")
+
+        return new_appointment_time
+
+
     def submitData(self):
         global userCode, symptoms, doctor, haltcode, username
         symptoms = []
@@ -385,11 +433,22 @@ class Ui_MainWindow(object):
                         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Processing Your Symptoms...</span></p></body></html>"))
                         doctor = classify_symptoms()
                         doctorName = db["doctors"].find_one({"occupation": doctor})["name"]
-                        # Get Current Time
-                        current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                        # add 24 hours to current time to get the appoinment time
-                        appointmentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time() + 86400))
-                        collection.insert_one({"UserName": username, "symptoms": symptoms, "additional": additionalData, "status": "pending", "doctor": doctor, "patientOriginalID": userCode, "time": current_time, "appointmentTime": appointmentTime})
+                        # Get current time
+                        current_time = datetime.now() + timedelta(hours=24)
+                        appointmentTime = self.allocate_appointment_time()
+                        print(appointmentTime)
+
+                        # Insert into MongoDB
+                        collection.insert_one({
+                        "UserName": username,
+                        "symptoms": symptoms,
+                        "additional": additionalData,
+                        "status": "pending",
+                        "doctor": doctor,
+                        "patientOriginalID": userCode,
+                        "time": current_time,
+                        "appointmentTime": str(appointmentTime)
+                        })
                         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">You Should Meet : Dr."+doctorName+"</span></p></body></html>"))
                         notif("Symptoms Submitted Successfully !<br>Thank You For Your Submission !")
                 else :
@@ -412,7 +471,7 @@ class Ui_MainWindow(object):
     def openPreviousSubmissions(self):
         if haltcode == 0:
                 try:
-                        subprocess.Popen(["python", "patient-submissions.py", userCode])
+                        subprocess.Popen(["pythonw", "patient-submissions.py", userCode])
                 except Exception as e:
                         error(str(e))
         else :

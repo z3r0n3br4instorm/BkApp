@@ -9,10 +9,10 @@ global patientID
 patientID = 0
 
 def error(error):
-        subprocess.Popen(["python", "notifications/error.py", error])
+        subprocess.Popen(["pythonw", "notifications/error.py", error])
 
 def notif(data):
-        subprocess.Popen(["python", "notifications/notific.py", data])
+        subprocess.Popen(["pythonw", "notifications/notific.py", data])
 
 
 class Ui_MainWindow(object):

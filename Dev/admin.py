@@ -10,10 +10,10 @@ import sys
 userCode = sys.argv[1]
 
 def error(error):
-        subprocess.Popen(["python", "notifications/error.py", error])
+        subprocess.Popen(["pythonw", "notifications/error.py", error])
 
 def notif(data):
-        subprocess.Popen(["python", "notifications/notific.py", data])
+        subprocess.Popen(["pythonw", "notifications/notific.py", data])
 
 def fetchDataFromDatabase():
         global username, userCode, haltcode
@@ -463,7 +463,7 @@ class Ui_MainWindow(object):
                 self.tableWidget_3.setItem(row, 4, QtWidgets.QTableWidgetItem(request['status']))
                 self.tableWidget_3.setItem(row, 5, QtWidgets.QTableWidgetItem(str(request['_id'])))
                 self.tableWidget_3.setItem(row, 6, QtWidgets.QTableWidgetItem(request['patientOriginalID']))
-                self.tableWidget_3.setItem(row, 7, QtWidgets.QTableWidgetItem(request['time']))
+                self.tableWidget_3.setItem(row, 7, QtWidgets.QTableWidgetItem(str(request['time'])))
                 self.tableWidget_3.setItem(row, 8, QtWidgets.QTableWidgetItem(request['appointmentTime']))
 
                 self.tableWidget_3.resizeColumnsToContents()

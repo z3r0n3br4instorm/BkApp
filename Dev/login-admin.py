@@ -20,10 +20,10 @@ envStat = "login"
 connStat = 2
 
 def error(error):
-        subprocess.Popen(["python", "notifications/error.py", error])
+        subprocess.Popen(["pythonw", "notifications/error.py", error])
 
 def notif(data):
-        subprocess.Popen(["python", "notifications/notific.py", data])
+        subprocess.Popen(["pythonw", "notifications/notific.py", data])
 
 
 def database_connection_successful():
@@ -394,7 +394,7 @@ class Ui_MainWindow(object):
                                 if results:  # Ensure results is not None
                                         notif("Login Successful, Welcome back admin !")
                                         userID = collection.find_one({"email": UserName, "password": Password})["_id"]
-                                        subprocess.Popen(["python", "admin.py", str(userID)])
+                                        subprocess.Popen(["pythonw", "admin.py", str(userID)])
                                 else:
                                         error("User not found!")
                         else:
@@ -485,7 +485,7 @@ class Ui_MainWindow(object):
                 self.pushButton_2.hide()
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Princeton Plainsboro  Software Department - OPD Login [Doctor]"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "OPD Login [Admin]"))
         # self.pushButton_2.setText(_translate("MainWindow", "<DYNAMIC>"))
         self.label_3.setText(_translate("MainWindow", "Full Name :"))
         self.label_4.setText(_translate("MainWindow", "Gender      :"))

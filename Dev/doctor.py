@@ -14,7 +14,7 @@ haltcode = 0
 userCode = userID
 
 def error(error_msg):
-    subprocess.Popen(["python", "notifications/error.py", error_msg])
+    subprocess.Popen(["pythonw", "notifications/error.py", error_msg])
 
 class PatientRequestsDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):

@@ -20,11 +20,11 @@ envStat = "signup"
 connStat = 2
 
 def error(error):
-        subprocess.Popen(["python", "notifications/error.py", error])
+        subprocess.Popen(["pythonw", "notifications/error.py", error])
 
 
 def notif(data):
-        subprocess.Popen(["python", "notifications/notific.py", data])
+        subprocess.Popen(["pythonw", "notifications/notific.py", data])
 
 def database_connection_successful():
         global connStat
@@ -462,7 +462,7 @@ class Ui_MainWindow(object):
                         notif("Login Successful, Welcome back "+results["UserName"]+"!")
                         # Get the _id from the database
                         userID = collection.find_one({"Email": UserName, "Password": Password})["_id"]
-                        subprocess.Popen(["python", "patient.py", str(userID)])
+                        subprocess.Popen(["pythonw", "patient.py", str(userID)])
                 else:
                       error("Email or Password is incorrect !")
         except Exception as e:

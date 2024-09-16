@@ -20,10 +20,10 @@ envStat = "login"
 connStat = 2
 
 def error(error):
-        subprocess.Popen(["python", "notifications/error.py", error])
+        subprocess.Popen(["pythonw", "notifications/error.py", error])
 
 def notif(data):
-        subprocess.Popen(["python", "notifications/notific.py", data])
+        subprocess.Popen(["pythonw", "notifications/notific.py", data])
 
 
 def database_connection_successful():
@@ -394,7 +394,7 @@ class Ui_MainWindow(object):
                                 if results:  # Ensure results is not None
                                         notif("Login Successful, Welcome back " + results["name"] + "!")
                                         userID = collection.find_one({"email": UserName, "password": Password})["_id"]
-                                        subprocess.Popen(["python", "doctor.py", str(userID)])
+                                        subprocess.Popen(["pythonw", "doctor.py", str(userID)])
                                 else:
                                         error("User not found!")
                         else:
