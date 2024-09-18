@@ -375,13 +375,19 @@ class Ui_MainWindow(object):
         elif current_time > work_end_time:
                 current_time = work_start_time + timedelta(days=1)
 
+        # Round up to the next 15-minute interval
+        minute = (current_time.minute // 15 + 1) * 15
+        if minute == 60:
+                current_time = current_time.replace(hour=current_time.hour + 1, minute=0, second=0, microsecond=0)
+        else:
+                current_time = current_time.replace(minute=minute, second=0, microsecond=0)
+
         appointments = collection.find({"appointmentTime": {"$gte": current_time}}).sort("appointmentTime", pymongo.ASCENDING)
 
         last_appointment_time = current_time
 
         for appointment in appointments:
                 existing_time = datetime.strptime(appointment["appointmentTime"], "%Y-%m-%d %H:%M:%S")
-
                 next_time = last_appointment_time + timedelta(minutes=15)
 
                 if next_time > work_end_time:
@@ -389,16 +395,15 @@ class Ui_MainWindow(object):
 
                 if next_time <= existing_time:
                         break
+
                 last_appointment_time = existing_time + timedelta(minutes=15)
 
         while last_appointment_time > work_end_time:
                 last_appointment_time = work_start_time + timedelta(days=1)
 
-        # If the generated time already exists, keep incrementing by 15 minutes until an available slot is found
         while collection.find_one({"appointmentTime": last_appointment_time.strftime("%Y-%m-%d %H:%M:%S")}):
                 last_appointment_time += timedelta(minutes=15)
 
-                # Ensure the newly adjusted time stays within working hours
                 if last_appointment_time > work_end_time:
                         last_appointment_time = work_start_time + timedelta(days=1)
 
